@@ -48,6 +48,34 @@ export default function RootLayout({
           crossOrigin="use-credentials"
         ></link>
         <script src="/serviceWorkerRegister.js" defer></script>
+        <title>解忧杂货铺 | The Solace Store</title>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            serif: ['"Noto Serif SC"', '"Playfair Display"', 'serif'],
+                            sans: ['system-ui', 'sans-serif'],
+                        },
+                        colors: {
+                            'paper': '#fdfbf7',
+                            'ink': '#2c2c2c',
+                            'accent': '#8b4513',
+                        }
+                    }
+                }
+            }
+            `,
+          }}
+        />
       </head>
       <body>
         {children}

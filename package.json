@@ -59,6 +59,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@next/swc-darwin-arm64": "^16.1.0",
     "@tauri-apps/api": "^2.1.1",
     "@tauri-apps/cli": "1.5.11",
     "@testing-library/dom": "^10.4.0",

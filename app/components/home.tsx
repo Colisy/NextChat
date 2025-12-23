@@ -22,7 +22,6 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
 import { AuthPage } from "./auth";
 import { getClientConfig } from "../config/client";
@@ -30,6 +29,7 @@ import { type ClientApi, getClientApi } from "../client/api";
 import { useAccessStore } from "../store";
 import clsx from "clsx";
 import { initializeMcpSystem, isMcpEnabled } from "../mcp/actions";
+import { MainComponent } from "./main";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -181,20 +181,30 @@ function Screen() {
       </Routes>
     );
   }
+
+  // Path.Home 路由：不包含外层容器，直接渲染
+  if (isHome) {
+    return (
+      <Routes>
+        <Route path={Path.Home} element={<MainComponent />} />
+      </Routes>
+    );
+  }
+
+  // 其他路由：包含外层容器
   const renderContent = () => {
     if (isAuth) return <AuthPage />;
     if (isSd) return <Sd />;
     if (isSdNew) return <Sd />;
     return (
       <>
-        <SideBar
+        {/* <SideBar
           className={clsx({
             [styles["sidebar-show"]]: isHome,
           })}
-        />
+        /> */}
         <WindowContent>
           <Routes>
-            <Route path={Path.Home} element={<Chat />} />
             <Route path={Path.NewChat} element={<NewChat />} />
             <Route path={Path.Masks} element={<MaskPage />} />
             <Route path={Path.Plugins} element={<PluginPage />} />
@@ -209,13 +219,15 @@ function Screen() {
   };
 
   return (
-    <div
-      className={clsx(styles.container, {
-        [styles["tight-container"]]: shouldTightBorder,
-        [styles["rtl-screen"]]: getLang() === "ar",
-      })}
-    >
-      {renderContent()}
+    <div id="body">
+      <div
+        className={clsx(styles.container, {
+          [styles["tight-container"]]: shouldTightBorder,
+          [styles["rtl-screen"]]: getLang() === "ar",
+        })}
+      >
+        {renderContent()}
+      </div>
     </div>
   );
 }
