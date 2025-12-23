@@ -56,13 +56,13 @@ export function MainComponent() {
     const luxunCard = document.getElementById("luxun");
 
     const handleLindaiyuClick = () => {
-      navigate("/new-chat?mask=qcDnmQEe7-qGfc_pb9S61");
+      navigate("/new-chat?mask=fmkjeB3l1ksgGCZXT1cRh");
     };
     const handleHejiongClick = () => {
-      navigate("/new-chat?mask=RmyOnV2UuMbCNxVy9AAni");
+      navigate("/new-chat?mask=qcDnmQEe7-qGfc_pb9S61");
     };
     const handleLuxunClick = () => {
-      navigate("/new-chat?mask=fmkjeB3l1ksgGCZXT1cRh");
+      navigate("/new-chat?mask=RmyOnV2UuMbCNxVy9AAni");
     };
 
     lindaiyuCard?.addEventListener("click", handleLindaiyuClick);
