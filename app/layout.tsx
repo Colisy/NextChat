@@ -54,7 +54,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="./tailwindcss.js"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
