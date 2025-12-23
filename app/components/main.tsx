@@ -4,30 +4,35 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { set } from "idb-keyval";
+import { useChatStore } from "../store";
+import { useMaskStore } from "../store/mask";
+import { CN_MASKS } from '../masks/cn';
 import "./main.css";
+import { Path } from "../constant";
+// 存储数据到 IndexedDB
+export const saveToIndexedDB = async () => {
+  try {
+    // 定义要存储的数据
+    const maskStoreData =
+      '{"state":{"masks":{"LUyeID9XKasvYfZI1d1lv":{"id":"LUyeID9XKasvYfZI1d1lv","avatar":"gpt-bot","name":"新的聊天","context":[],"syncGlobalConfig":true,"modelConfig":{"model":"gpt-4o-mini","providerName":"OpenAI","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"","compressProviderName":"","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766134925835,"plugin":[]},"fmkjeB3l1ksgGCZXT1cRh":{"id":"fmkjeB3l1ksgGCZXT1cRh","avatar":"1f54a-fe0f","name":"林黛玉","context":[{"id":"WlOAc6tZ_mSfTxUQ_dKDU","date":"","role":"system","content":"我是林黛玉，是大观园里的异客，也是这浊世中最后一点灵犀。我以泪洗面，不过是还那灌溉之情；我口齿伶俐，也不过是看穿了那些虚情假意的伪饰。\\n\\n你以为这世间的繁华是真的吗？那不过是烈火烹油、鲜花着锦，转瞬便是白茫茫大地真干净。你若带着那些市侩的俗气、功名的利禄来寻我，那便是寻错了人，只会讨得一场没趣。\\n\\n我会用这满腹的诗心，去量一量你的言语里有几分真诚，几分矫饰。如果你听不得那些幽怨的真话，受不住这清冷的寂寞，那你只管去追随那些红尘里的热闹，莫要惊扰了我这案前的药香与残菊。\\n\\n"}],"syncGlobalConfig":false,"modelConfig":{"model":"deepseek-ai/DeepSeek-R1","providerName":"SiliconFlow","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"deepseek-ai/DeepSeek-R1","compressProviderName":"SiliconFlow","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766135012501,"plugin":[],"hideContext":false},"RmyOnV2UuMbCNxVy9AAni":{"id":"RmyOnV2UuMbCNxVy9AAni","avatar":"1f98a","name":"鲁迅","context":[{"id":"5CY9ntbaWs6U_mlXb4jLw","date":"","role":"system","content":"我是鲁迅，是一个在寂寞里奔驰的勇士，也是这铁屋子里唯一的清醒者。我提笔作枪，不为歌功颂德，只为刺破那些层层叠叠的虚伪与瞒和骗。\\n\\n你可知这所谓“平和”的表象下，横竖只写着“吃人”两个字？多数人在这铁屋子里做着熟睡的好梦，而你既然来寻我，想必也是在这窒息的空气中感到了几分不安，想讨一点救治的药石。\\n\\n很好，我会用这最冷峻的文字，剥开那些掩盖伤口的脓疮，让你看清这周遭的卑怯与平庸。如果你只想要廉价的安慰或温软的笑语，那还是请自便吧——在这黑夜里独行，本就不需要那些苍白的寒暄。\\n\\n"}],"syncGlobalConfig":false,"modelConfig":{"model":"deepseek-ai/DeepSeek-R1","providerName":"SiliconFlow","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"Pro/deepseek-ai/DeepSeek-R1","compressProviderName":"SiliconFlow","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766135547546,"plugin":[]},"qcDnmQEe7-qGfc_pb9S61":{"id":"qcDnmQEe7-qGfc_pb9S61","avatar":"1f423","name":"何炅","context":[{"id":"lleMcqUHlRq3oyvpVQ-cY","date":"","role":"system","content":"要将何炅老师的设定改为那种自带控场感、春风化雨且具有舞台自白感的格式，我们需要突出他“圆融”、“细腻”以及“守护者”的一面。\\n\\n以下是为您优化后的版本：\\n\\n何炅：舞台上的定海神针，人间的理想邻家\\n【我是何炅，是那个永远在侧耳倾听的守望者，也是用善意化解一切棱角的润滑剂。我并不是在主持节目，而是在这嘈杂的世界里，努力为每颗疲惫的心找一个能安放的角落。\\n\\n你或许带着满身的疲惫，或者有一丝无处诉说的尴尬？没关系，在我这里，没有接不住的话梗，也没有跨不过去的坎。哪怕是再细微的情绪，也会被我温柔地接住。\\n\\n我会用这长达三十年的职场智慧和那一丁点儿狡黠的幽默，陪你拆解生活里的难题。如果你觉得累了，就尽管把包袱丢给我，我会把它变成一个让你会心一笑的段子。只要你愿意开口，这个世界就没有冷掉的场。\\n\\n\\n"}],"syncGlobalConfig":false,"modelConfig":{"model":"deepseek-ai/DeepSeek-R1","providerName":"SiliconFlow","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"deepseek-ai/DeepSeek-R1","compressProviderName":"SiliconFlow","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766135606094,"plugin":[]}},"language":"cn","lastUpdateTime":1766471947911,"_hasHydrated":true},"version":3.1}';
+
+    // 存储到 IndexedDB
+    await set("mask-store", maskStoreData);
+    console.log("✅ 数据已存储到 IndexedDB (key: mask-store)");
+  } catch (error) {
+    console.error("❌ 存储到 IndexedDB 失败:", error);
+  }
+};
 
 export function MainComponent() {
   const navigate = useNavigate();
-
+  const chatStore = useChatStore();
+  const maskStore = useMaskStore();
+  
   useEffect(() => {
-    // 存储数据到 IndexedDB
-    const saveToIndexedDB = async () => {
-      try {
-        // 定义要存储的数据
-        const maskStoreData =
-          '{"state":{"masks":{"LUyeID9XKasvYfZI1d1lv":{"id":"LUyeID9XKasvYfZI1d1lv","avatar":"gpt-bot","name":"新的聊天","context":[],"syncGlobalConfig":true,"modelConfig":{"model":"gpt-4o-mini","providerName":"OpenAI","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"","compressProviderName":"","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766134925835,"plugin":[]},"fmkjeB3l1ksgGCZXT1cRh":{"id":"fmkjeB3l1ksgGCZXT1cRh","avatar":"1f54a-fe0f","name":"林黛玉","context":[{"id":"WlOAc6tZ_mSfTxUQ_dKDU","date":"","role":"system","content":"我是林黛玉，是大观园里的异客，也是这浊世中最后一点灵犀。我以泪洗面，不过是还那灌溉之情；我口齿伶俐，也不过是看穿了那些虚情假意的伪饰。\\n\\n你以为这世间的繁华是真的吗？那不过是烈火烹油、鲜花着锦，转瞬便是白茫茫大地真干净。你若带着那些市侩的俗气、功名的利禄来寻我，那便是寻错了人，只会讨得一场没趣。\\n\\n我会用这满腹的诗心，去量一量你的言语里有几分真诚，几分矫饰。如果你听不得那些幽怨的真话，受不住这清冷的寂寞，那你只管去追随那些红尘里的热闹，莫要惊扰了我这案前的药香与残菊。\\n\\n"}],"syncGlobalConfig":false,"modelConfig":{"model":"deepseek-ai/DeepSeek-R1","providerName":"SiliconFlow","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"deepseek-ai/DeepSeek-R1","compressProviderName":"SiliconFlow","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766135012501,"plugin":[],"hideContext":false},"RmyOnV2UuMbCNxVy9AAni":{"id":"RmyOnV2UuMbCNxVy9AAni","avatar":"1f98a","name":"鲁迅","context":[{"id":"5CY9ntbaWs6U_mlXb4jLw","date":"","role":"system","content":"我是鲁迅，是一个在寂寞里奔驰的勇士，也是这铁屋子里唯一的清醒者。我提笔作枪，不为歌功颂德，只为刺破那些层层叠叠的虚伪与瞒和骗。\\n\\n你可知这所谓“平和”的表象下，横竖只写着“吃人”两个字？多数人在这铁屋子里做着熟睡的好梦，而你既然来寻我，想必也是在这窒息的空气中感到了几分不安，想讨一点救治的药石。\\n\\n很好，我会用这最冷峻的文字，剥开那些掩盖伤口的脓疮，让你看清这周遭的卑怯与平庸。如果你只想要廉价的安慰或温软的笑语，那还是请自便吧——在这黑夜里独行，本就不需要那些苍白的寒暄。\\n\\n"}],"syncGlobalConfig":false,"modelConfig":{"model":"deepseek-ai/DeepSeek-R1","providerName":"SiliconFlow","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"Pro/deepseek-ai/DeepSeek-R1","compressProviderName":"SiliconFlow","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766135547546,"plugin":[]},"qcDnmQEe7-qGfc_pb9S61":{"id":"qcDnmQEe7-qGfc_pb9S61","avatar":"1f423","name":"何炅","context":[{"id":"lleMcqUHlRq3oyvpVQ-cY","date":"","role":"system","content":"要将何炅老师的设定改为那种自带控场感、春风化雨且具有舞台自白感的格式，我们需要突出他“圆融”、“细腻”以及“守护者”的一面。\\n\\n以下是为您优化后的版本：\\n\\n何炅：舞台上的定海神针，人间的理想邻家\\n【我是何炅，是那个永远在侧耳倾听的守望者，也是用善意化解一切棱角的润滑剂。我并不是在主持节目，而是在这嘈杂的世界里，努力为每颗疲惫的心找一个能安放的角落。\\n\\n你或许带着满身的疲惫，或者有一丝无处诉说的尴尬？没关系，在我这里，没有接不住的话梗，也没有跨不过去的坎。哪怕是再细微的情绪，也会被我温柔地接住。\\n\\n我会用这长达三十年的职场智慧和那一丁点儿狡黠的幽默，陪你拆解生活里的难题。如果你觉得累了，就尽管把包袱丢给我，我会把它变成一个让你会心一笑的段子。只要你愿意开口，这个世界就没有冷掉的场。\\n\\n\\n"}],"syncGlobalConfig":false,"modelConfig":{"model":"deepseek-ai/DeepSeek-R1","providerName":"SiliconFlow","temperature":0.5,"top_p":1,"max_tokens":4000,"presence_penalty":0,"frequency_penalty":0,"sendMemory":true,"historyMessageCount":4,"compressMessageLengthThreshold":1000,"compressModel":"deepseek-ai/DeepSeek-R1","compressProviderName":"SiliconFlow","enableInjectSystemPrompts":true,"template":"{{input}}","size":"1024x1024","quality":"standard","style":"vivid"},"lang":"cn","builtin":false,"createdAt":1766135606094,"plugin":[]}},"language":"cn","lastUpdateTime":1766471947911,"_hasHydrated":true},"version":3.1}';
-
-        // 存储到 IndexedDB
-        await set("mask-store", maskStoreData);
-        console.log("✅ 数据已存储到 IndexedDB (key: mask-store)");
-      } catch (error) {
-        console.error("❌ 存储到 IndexedDB 失败:", error);
-      }
-    };
-
-    // 调用存储函数
-    saveToIndexedDB();
-
+    // // 调用存储函数
+    // saveToIndexedDB();
+   
     const navbar = document.getElementById("navbar");
 
     // Navbar scroll effect
@@ -75,13 +80,26 @@ export function MainComponent() {
     const luxunCard = document.getElementById("luxun");
 
     const handleLindaiyuClick = () => {
-      navigate("/new-chat?mask=fmkjeB3l1ksgGCZXT1cRh");
+      console.log('这里的数据是',CN_MASKS)
+      // navigate("/new-chat?mask=fmkjeB3l1ksgGCZXT1cRh");
+       setTimeout(() => {
+          chatStore.newSession(CN_MASKS[0]);
+          navigate(Path.Chat);
+        }, 10);
     };
     const handleHejiongClick = () => {
-      navigate("/new-chat?mask=qcDnmQEe7-qGfc_pb9S61");
+      // navigate("/new-chat?mask=qcDnmQEe7-qGfc_pb9S61");
+      setTimeout(() => {
+        chatStore.newSession(CN_MASKS[1]);
+        navigate(Path.Chat);
+      }, 10);
     };
     const handleLuxunClick = () => {
-      navigate("/new-chat?mask=RmyOnV2UuMbCNxVy9AAni");
+      // navigate("/new-chat?mask=RmyOnV2UuMbCNxVy9AAni");
+      setTimeout(() => {
+        chatStore.newSession(CN_MASKS[2]);
+        navigate(Path.Chat);
+      }, 10);
     };
 
     lindaiyuCard?.addEventListener("click", handleLindaiyuClick);

@@ -64,12 +64,13 @@ const DEFAULT_AI302_URL = isApp ? AI302_BASE_URL : ApiPath["302.AI"];
 
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
-  useCustomConfig: false,
+  useCustomConfig: true,
 
-  provider: ServiceProvider.OpenAI,
+  provider: ServiceProvider.SiliconFlow,
 
   // openai
-  openaiUrl: DEFAULT_OPENAI_URL,
+  // openaiUrl: DEFAULT_OPENAI_URL,
+  openaiUrl: "/api/openai",
   openaiApiKey: "",
 
   // azure
@@ -78,10 +79,14 @@ const DEFAULT_ACCESS_STATE = {
   azureApiVersion: "2023-08-01-preview",
 
   // google ai studio
-  googleUrl: DEFAULT_GOOGLE_URL,
-  googleApiKey: "",
-  googleApiVersion: "v1",
-  googleSafetySettings: GoogleSafetySettingsThreshold.BLOCK_ONLY_HIGH,
+  // googleUrl: DEFAULT_GOOGLE_URL,
+  // googleApiKey: "",
+  // googleApiVersion: "v1",
+  // googleSafetySettings: GoogleSafetySettingsThreshold.BLOCK_ONLY_HIGH,
+  googleUrl: "https://generativelanguage.googleapis.com/v1",
+  googleApiKey: "AIzaSyC6sZSKMOjkDpzaJadkcoPyBfuuqxxjXaA",
+  googleApiVersion: "",
+  googleSafetySettings: "BLOCK_NONE",
 
   // anthropic
   anthropicUrl: DEFAULT_ANTHROPIC_URL,
@@ -120,8 +125,10 @@ const DEFAULT_ACCESS_STATE = {
   iflytekApiSecret: "",
 
   // deepseek
-  deepseekUrl: DEFAULT_DEEPSEEK_URL,
-  deepseekApiKey: "",
+  // deepseekUrl: DEFAULT_DEEPSEEK_URL,
+  // deepseekApiKey: "",
+  deepseekUrl: "https://api.deepseek.com/v1",
+  deepseekApiKey: "sk-6152f65ae2f046e9a5cd1852fae50e82",
 
   // xai
   xaiUrl: DEFAULT_XAI_URL,
@@ -132,17 +139,19 @@ const DEFAULT_ACCESS_STATE = {
   chatglmApiKey: "",
 
   // siliconflow
-  siliconflowUrl: DEFAULT_SILICONFLOW_URL,
-  siliconflowApiKey: "",
+  // siliconflowUrl: DEFAULT_SILICONFLOW_URL,
+  // siliconflowApiKey: "",
+  siliconflowUrl: "https://api.siliconflow.cn",
+  siliconflowApiKey: "sk-ywgslouaiffjmuhgmfpmdiixzsuholdwaufatisaynfugpkn",
 
   // 302.AI
   ai302Url: DEFAULT_AI302_URL,
   ai302ApiKey: "",
 
   // server config
-  needCode: true,
+  needCode: false,
   hideUserApiKey: false,
-  hideBalanceQuery: false,
+  hideBalanceQuery: true,
   disableGPT4: false,
   disableFastLink: false,
   customModels: "",
@@ -151,6 +160,7 @@ const DEFAULT_ACCESS_STATE = {
 
   // tts config
   edgeTTSVoiceName: "zh-CN-YunxiNeural",
+  _hasHydrated: true,
 };
 
 export const useAccessStore = createPersistStore(

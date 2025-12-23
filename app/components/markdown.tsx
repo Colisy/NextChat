@@ -334,8 +334,9 @@ export function Markdown(
     <div
       className="markdown-body"
       style={{
-        fontSize: `${props.fontSize ?? 14}px`,
+        fontSize: `22px`,
         fontFamily: props.fontFamily || "inherit",
+        fontWeight: 'Bold',
       }}
       ref={mdRef}
       onContextMenu={props.onContextMenu}

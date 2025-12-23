@@ -15,6 +15,7 @@ type NonFunctionKeys<T> = {
 type NonFunctionFields<T> = Pick<T, NonFunctionKeys<T>>;
 
 export function getNonFunctionFileds<T extends object>(obj: T) {
+  console.log("初始化2")
   const ret: any = {};
 
   Object.entries(obj).map(([k, v]) => {
@@ -108,6 +109,7 @@ const MergeStates: StateMerger = {
     return localState;
   },
   [StoreKey.Mask]: (localState, remoteState) => {
+    console.log("初始化1")
     localState.masks = {
       ...remoteState.masks,
       ...localState.masks,

@@ -29,7 +29,7 @@ import { type ClientApi, getClientApi } from "../client/api";
 import { useAccessStore } from "../store";
 import clsx from "clsx";
 import { initializeMcpSystem, isMcpEnabled } from "../mcp/actions";
-import { MainComponent } from "./main";
+import { MainComponent, saveToIndexedDB } from "./main";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -115,12 +115,12 @@ export function useSwitchTheme() {
 
 function useHtmlLang() {
   useEffect(() => {
-    const lang = getISOLang();
-    const htmlLang = document.documentElement.lang;
+    // const lang = getISOLang();
+    // const htmlLang = document.documentElement.lang;
 
-    if (lang !== htmlLang) {
-      document.documentElement.lang = lang;
-    }
+    // if (lang !== htmlLang) {
+    //   document.documentElement.lang = lang;
+    // }
   }, []);
 }
 
@@ -245,12 +245,13 @@ export function useLoadData() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
-
+ 
 export function Home() {
   useSwitchTheme();
   useLoadData();
   useHtmlLang();
-
+  // 调用存储函数
+  // saveToIndexedDB();
   useEffect(() => {
     console.log("[Config] got config from build time", getClientConfig());
     useAccessStore.getState().fetch();
