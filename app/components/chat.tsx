@@ -1903,7 +1903,7 @@ function _Chat() {
                           </div>
                         )}
 
-                        {message?.tools?.length > 0 && (
+                        {(message?.tools?.length || 0) > 0 && (
                           <div className={styles["chat-message-tools"]}>
                             {message?.tools?.map((tool) => (
                               <div
