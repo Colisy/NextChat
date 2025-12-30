@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { set } from "idb-keyval";
 import { useChatStore } from "../store";
 import { useMaskStore } from "../store/mask";
-import { CN_MASKS } from '../masks/cn';
+import { CN_MASKS } from "../masks/cn";
 import "./main.css";
 import { Path } from "../constant";
 // 存储数据到 IndexedDB
@@ -28,11 +28,11 @@ export function MainComponent() {
   const navigate = useNavigate();
   const chatStore = useChatStore();
   const maskStore = useMaskStore();
-  
+
   useEffect(() => {
     // // 调用存储函数
     // saveToIndexedDB();
-   
+
     const navbar = document.getElementById("navbar");
 
     // Navbar scroll effect
@@ -80,24 +80,24 @@ export function MainComponent() {
     const luxunCard = document.getElementById("luxun");
 
     const handleLindaiyuClick = () => {
-      console.log('这里的数据是',CN_MASKS)
+      console.log("这里的数据是", CN_MASKS);
       // navigate("/new-chat?mask=fmkjeB3l1ksgGCZXT1cRh");
-       setTimeout(() => {
-          chatStore.newSession(CN_MASKS[0]);
-          navigate(Path.Chat);
-        }, 10);
+      setTimeout(() => {
+        chatStore.newSession(CN_MASKS[0]);
+        navigate(Path.Chat);
+      }, 10);
     };
     const handleHejiongClick = () => {
       // navigate("/new-chat?mask=qcDnmQEe7-qGfc_pb9S61");
       setTimeout(() => {
-        chatStore.newSession(CN_MASKS[1]);
+        chatStore.newSession(CN_MASKS[2]);
         navigate(Path.Chat);
       }, 10);
     };
     const handleLuxunClick = () => {
       // navigate("/new-chat?mask=RmyOnV2UuMbCNxVy9AAni");
       setTimeout(() => {
-        chatStore.newSession(CN_MASKS[2]);
+        chatStore.newSession(CN_MASKS[1]);
         navigate(Path.Chat);
       }, 10);
     };
